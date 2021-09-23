@@ -71,20 +71,10 @@ export class Level {
 		const canvas = document.createElement('canvas');
 		this.ctx = canvas.getContext("2d")!;
 		this.canvas = canvas;
-
-		this.init();		
-	}
-
-
-	private setBasicCanvasConfig() {
-		// TODO bg img		
 		this.canvas.width = this.canvasConfig.width;
 		this.canvas.height = this.canvasConfig.height;
 
-		this.ctx.fillStyle = this.canvasConfig.borderColor;
-		this.ctx.fillRect(0, 0, this.canvas.width, 12);
-		this.ctx.fillRect(0, 0, 12, this.canvas.height);
-		this.ctx.fillRect(this.canvas.width - 12, 0, 12, this.canvas.height);
+		this.init();		
 	}
 
 	private setBricks() {
@@ -233,15 +223,12 @@ export class Level {
 			this.ctx?.fillRect(brick.x, brick.y, brick.width, brick.height);
 		});
 
-
 		//draw the walls
-		this.ctx.fillStyle = this.canvasConfig.borderColor;
+		// this.ctx.fillStyle = this.canvasConfig.borderColor;
+		this.ctx.fillStyle = 'red';
 		this.ctx.fillRect(0, 0, this.canvas.width, 12);
 		this.ctx.fillRect(0, 0, 12, this.canvas.height);
 		this.ctx.fillRect(this.canvas.width - 12, 0, 12, this.canvas.height);
-		this.ctx.fillStyle = 'red';
-		this.ctx.fill();
-		
 	}	
 
 	private init() {
@@ -251,7 +238,6 @@ export class Level {
 		container.innerHTML = '';
 		container.appendChild(this.canvas);
 
-		this.setBasicCanvasConfig();
 		this.setBricks();
 		this.setListeners();
 		requestAnimationFrame(() => this.renderLevel());
