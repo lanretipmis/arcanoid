@@ -1,4 +1,4 @@
-import { Colors, ColorsMap, Paddle, Ball, Brick } from "../interfaces";
+import { Colors, ColorsMap, Paddle, Ball, Brick } from "../types/interfaces";
 const defaultCanvasSetting = {
 	width: 400, 
 	height: 500,
@@ -52,7 +52,8 @@ export class Level {
 		y: 440,
 		width: this.brickConfig.brickWidth,
 		height: this.brickConfig.brickHeight,
-		dx: 0
+		dx: 0,
+		img: Level.loadImgForPaddle()
 	};
 	private ball: Ball = {
 		x: 130,
@@ -89,10 +90,10 @@ export class Level {
 	private setBricksOnCanvas() {
 		const bricks: Brick[] = [];
 		const {brickGap, brickHeight, brickWidth} = this.brickConfig;
-		for (let row = 0; row < level1.length; row++) {
-			for (let col = 0; col < level1[row]!.length; col++) {
+		for (let row = 0; row < this.map.length; row++) {
+			for (let col = 0; col < this.map[row]!.length; col++) {
 		  
-			  const colorCode = level1[row]![col]!;
+			  const colorCode = this.map[row]![col]! as keyof ColorsMap;
 		  
 			  bricks.push({
 				x: this.wallSize + (brickWidth + brickGap) * col,
@@ -117,6 +118,13 @@ export class Level {
 			   ball.x + ball.width > paddle.x &&
 			   ball.y < paddle.y + paddle.height &&
 			   ball.y + ball.height > paddle.y;
+    }
+
+    static loadImgForPaddle():HTMLImageElement {
+	    const image = document.createElement('img');
+	    // image.src = 'https://unsplash.com/photos/rgFScQhM3A0';
+		image.src = '../sprites/small-paddle.png';
+	    return image;
     }
 
 	private setListeners() {
@@ -147,9 +155,9 @@ export class Level {
 		  });
 	}
 
-	private startGame() {
+	private renderLevel() {
 
-		requestAnimationFrame(() => this.startGame());
+		requestAnimationFrame(() => this.renderLevel());
 
 		// clear canvas 
 		this.ctx.clearRect(0,0, this.canvas.width, this.canvas.height);
@@ -162,23 +170,23 @@ export class Level {
 		 else if (this.paddle.x + this.brickConfig.brickWidth > this.canvas.width - this.wallSize) {
 			this.paddle.x = this.canvas.width - this.wallSize - this.brickConfig.brickWidth;
 		}
-		
 
-		  this.ctx.fillStyle = 'cyan';
-		  this.ctx.fillRect(this.paddle.x, this.paddle.y, this.paddle.width, this.paddle.height);
+		 //draw paddle
+		this.ctx.drawImage(this.paddle.img, this.paddle.x, this.paddle.y);
+
 	}	
 
 	private init() {
 
 		// set canvas into html
-		const container: HTMLDivElement = document.querySelector('#container')!;
+		const container: Element = document.querySelector('#container')!;
 		container.innerHTML = '';
 		container.appendChild(this.canvas);
 
 		this.setBasicCanvasConfig();
 		this.setBricksOnCanvas();
 		this.setListeners();
-		requestAnimationFrame(() => this.startGame());
+		requestAnimationFrame(() => this.renderLevel());
 	}
 
 }

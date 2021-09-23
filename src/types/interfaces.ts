@@ -18,8 +18,9 @@ export interface Paddle  {
 	width: number,
 	height: number,
 	// direction x
-	dx: number
-  };
+	dx: number,
+	img: HTMLImageElement
+}
 export interface Brick {
 	x: number,
 	y: number,
@@ -38,4 +39,4 @@ export interface Ball {
 	// direction x, y
 	dx: number,
 	dy: number
-  };
+  }

@@ -1,4 +1,4 @@
-import { GameData } from './interfaces';
+import { GameData } from './types/interfaces';
 import { showStartMenu } from './startMenu';
 
 export function app () {
