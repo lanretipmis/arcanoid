@@ -241,6 +241,8 @@ export class Level {
 		this.setBricks();
 		this.setListeners();
 		requestAnimationFrame(() => this.renderLevel());
+
+		//ToDo bg canvas for image
 	}
 
 }
