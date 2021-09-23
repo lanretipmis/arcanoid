@@ -108,7 +108,6 @@ export class Level {
 
     static loadImgForPaddle():HTMLImageElement {
 	    const image = document.createElement('img');
-	    // image.src = 'https://unsplash.com/photos/rgFScQhM3A0';
 		image.src = '../sprites/small-paddle.png';
 	    return image;
     }
@@ -178,7 +177,7 @@ export class Level {
 		}
 
 		for(let index = 0; index < this.bricks.length; index++)  {
-			const brick = this.bricks[index];
+			const brick = this.bricks[index]!;
 			if (collides(this.ball, brick)) {
 
 				this.bricks.splice(index, 1);
@@ -240,6 +239,9 @@ export class Level {
 		this.ctx.fillRect(0, 0, this.canvas.width, 12);
 		this.ctx.fillRect(0, 0, 12, this.canvas.height);
 		this.ctx.fillRect(this.canvas.width - 12, 0, 12, this.canvas.height);
+		this.ctx.fillStyle = 'red';
+		this.ctx.fill();
+		
 	}	
 
 	private init() {

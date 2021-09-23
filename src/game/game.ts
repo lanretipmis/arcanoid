@@ -2,13 +2,13 @@ import { Level } from "./level";
 
 export class Game {
 
-	private view: Level
+	private level: Level
 	// private state: 'inGame' | 'ended' = 'onGame';
 	// private view: GameView;
 	
 
 	constructor(){		
-		this.view = new Level();		
+		this.level = new Level();		
 
 		// this.init();
 	}
